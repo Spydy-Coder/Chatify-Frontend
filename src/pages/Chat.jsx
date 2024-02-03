@@ -78,7 +78,7 @@ export default function Chat() {
       >
         <div
           className="container-fluid"
-          style={{ height: "80%" , width:"90%", backgroundColor: " #00000076" }}
+          style={{ height: "80%" , backgroundColor: " #00000076" }}
         >
           <div className="row h-100">
             {(!currentChat || !isSmallScreen) && (
