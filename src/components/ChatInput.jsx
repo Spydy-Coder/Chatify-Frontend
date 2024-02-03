@@ -30,20 +30,20 @@ export default function ChatInput({ handleSendMsg }) {
     <Container>
       <div className="button-container">
         <div className="emoji">
-          <BsEmojiSmileFill size={35} onClick={handleEmojiPickerhideShow} />
+          <BsEmojiSmileFill size={32} onClick={handleEmojiPickerhideShow} />
           {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />}
         </div>
       </div>
       <form className="input-container" onSubmit={(event) => sendChat(event)}>
         <input
           type="text"
-          placeholder="type your message here"
+          placeholder="Type your message"
           onChange={(e) => setMsg(e.target.value)}
-          className="m-0"
+          className="mb-0"
           value={msg}
         />
         <button type="submit" >
-          <IoMdSend size={35} className="rounded-lg"/>
+          <IoMdSend size={25} className="rounded-lg"/>
         </button>
       </form>
     </Container>
@@ -105,7 +105,7 @@ const Container = styled.div`
   }
   .input-container {
     width: 100%;
-    height:50px;
+    height:35px;
     border-radius: 2rem;
     display: flex;
     align-items: center;
