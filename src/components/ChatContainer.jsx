@@ -79,7 +79,7 @@ export default function ChatContainer({ currentChat, socket, handleBack }) {
         className="chat-header d-flex justify-content-between p-2 "
         style={{ height: "10%" }}
       >
-        <div className="user-details d-flex gap-2">
+        <div className="user-details d-flex gap-3">
           <IoArrowBackCircleSharp
             className="back"
             onClick={handleBack}
@@ -92,8 +92,8 @@ export default function ChatContainer({ currentChat, socket, handleBack }) {
               alt=""
             />
           </div>
-          <div className="username text-white">
-            <h4>{currentChat.username}</h4>
+          <div className="username text-white py-2">
+            <h4 className="">{currentChat.username}</h4>
           </div>
         </div>
         <div className="">
