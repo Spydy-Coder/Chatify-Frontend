@@ -1,0 +1,34 @@
+.allcontacts {
+    background-color: #080420;
+  }
+  
+  .allcontacts img {
+    height: 30px;
+    width: 30px;
+  }
+  
+  .contact {
+    border: none !important;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #ffffff34 !important;
+  }
+  
+  .contact:hover {
+    background-color:#9a86f3 !important;
+    text-decoration: none;
+  }
+  
+  .contacts {
+    &::-webkit-scrollbar {
+      width: 0.2rem;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #ffffff39;
+      width: 0.1rem;
+      border-radius: 1rem;
+    }
+  }
+  
