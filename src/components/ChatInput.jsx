@@ -39,7 +39,7 @@ export default function ChatInput({ handleSendMsg }) {
           type="text"
           placeholder="Type your message"
           onChange={(e) => setMsg(e.target.value)}
-          className="mb-0"
+          className="my-auto"
           value={msg}
         />
         <button type="submit" >
@@ -113,12 +113,12 @@ const Container = styled.div`
     background-color: #ffffff34;
     input {
       width: 90%;
-      height: 90%;
+      height: 50%;
       background-color: transparent;
       color: white;
       border: none;
       padding-left: 1rem;
-      font-size: 1.6rem;
+      font-size: 1.2rem;
 
       &::selection {
         background-color: #9a86f3;

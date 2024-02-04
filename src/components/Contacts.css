@@ -6,7 +6,15 @@
     height: 30px;
     width: 30px;
   }
+  .brand img{
+    height:40px;
+    width: 40px;
+    /* border-radius: 26px; */
+  }
   
+  .brand h4{
+    letter-spacing: 2px;
+  }
   .contact {
     border: none !important;
     border-radius: 5px;

@@ -91,7 +91,7 @@ export default function Register() {
       <FormContainer>
         <form action="" onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
-            <img src={Logo} alt="logo" />
+          <img  className="rounded-circle" style={{height:"70px",width:"70px"}} src={Logo} alt="logo" />
             {/* <h1>CHATIFY</h1> */}
           </div>
           <input
@@ -119,7 +119,7 @@ export default function Register() {
             onChange={(e) => handleChange(e)}
           />
           <button type="submit">Create User</button>
-          <span>
+          <span className="text-center">
             Already have an account ? <Link to="/login">Login.</Link>
           </span>
         </form>

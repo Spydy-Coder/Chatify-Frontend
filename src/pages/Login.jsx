@@ -66,8 +66,8 @@ export default function Login() {
       <FormContainer>
         <form action="" onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
-            <img src={Logo} alt="logo" />
-            {/* <h1>Chatify</h1> */}
+            <img  className="rounded-circle" style={{height:"80px",width:"80px"}} src={Logo} alt="logo" />
+          
           </div>
           <input
             type="text"
@@ -83,7 +83,7 @@ export default function Login() {
             onChange={(e) => handleChange(e)}
           />
           <button type="submit">Log In</button>
-          <span>
+          <span className="text-center">
             Don't have an account ? <Link to="/register">Create One.</Link>
           </span>
         </form>

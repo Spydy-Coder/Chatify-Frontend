@@ -26,8 +26,13 @@ export default function Contacts({ contacts, changeChat }) {
             className="brand text-white d-flex gap-2 justify-content-center align-items-center"
             style={{ height: "10%" }}
           >
-            <img src={Logo} alt="logo" />
-            <h5>Chatify</h5>
+            <div className="">
+            <img src={Logo} alt="logo" className="rounded-circle" />
+            </div>
+            <h4 className="mb-0 fw-bold">CHATIFY</h4>
+
+           
+           
           </div>
           <div
             className="contacts"
