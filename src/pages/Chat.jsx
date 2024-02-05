@@ -18,7 +18,7 @@ export default function Chat() {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
-    if (window.innerWidth <=767) {
+    if (window.innerWidth <= 767) {
       setIsSmallScreen(true);
     }
 
@@ -52,15 +52,29 @@ export default function Chat() {
     }
   }, [currentUser]);
 
-  useEffect(async () => {
-    if (currentUser) {
-      if (currentUser.isAvatarImageSet) {
-        const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
-        setContacts(data.data);
-      } else {
-        navigate("/setAvatar");
+  useEffect(() => {
+    const fetchContacts = async () => {
+      try {
+        if (currentUser) {
+          if (currentUser.isAvatarImageSet) {
+            const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
+            setContacts(data.data);
+          } else {
+            navigate("/setAvatar");
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching contacts:", error);
       }
-    }
+    };
+    fetchContacts();
+
+    // Fetch contacts every 30 seconds
+    const intervalId = setInterval(fetchContacts, 30000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [currentUser, navigate]);
 
   const handleChatChange = (chat) => {
@@ -78,7 +92,7 @@ export default function Chat() {
       >
         <div
           className="container-fluid"
-          style={{ height: "80%" , backgroundColor: " #00000076" }}
+          style={{ height: "80%", backgroundColor: " #00000076" }}
         >
           <div className="row h-100">
             {(!currentChat || !isSmallScreen) && (
