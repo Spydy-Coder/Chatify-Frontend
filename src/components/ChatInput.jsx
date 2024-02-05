@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BsEmojiSmileFill } from "react-icons/bs";
 import { IoMdSend } from "react-icons/io";
 import styled from "styled-components";
 import Picker from "emoji-picker-react";
 import { FaFaceSmileWink } from "react-icons/fa6";
-
+import annyang from "annyang";
+import { AiFillAudio } from "react-icons/ai";
+import { FaPause } from "react-icons/fa6";
 
 export default function ChatInput({ handleSendMsg }) {
   const [msg, setMsg] = useState("");
@@ -19,6 +21,10 @@ export default function ChatInput({ handleSendMsg }) {
     setMsg(message);
   };
 
+  const handleChange = (e) => {
+    setMsg(e.target.value);
+  };
+
   const sendChat = (event) => {
     event.preventDefault();
     if (msg.length > 0) {
@@ -27,11 +33,62 @@ export default function ChatInput({ handleSendMsg }) {
     }
   };
 
+  const [transcript, setTranscript] = useState("");
+  const [isListening, setisListening] = useState(true);
+  const [previousTalks, setPreviousTalks] = useState("");
+
+  useEffect(async () => {
+    if (transcript.length > 0) {
+      await handleSendMsg(transcript);
+      setMsg("");
+      setTranscript("");
+    }
+  }, [transcript]);
+
+  useEffect(() => {
+    // Initialize annyang when the component mounts
+    annyang.init({ autoRestart: true });
+
+    // Add a command for listening to speech
+    annyang.addCommands({
+      "start listening": () => {
+        annyang.start();
+      },
+      "stop listening": () => {
+        annyang.abort();
+      },
+    });
+
+    annyang.addCallback("result", async (phrases) => {
+      const newTranscript = phrases[0];
+      setTranscript(newTranscript);
+      // // Update the string of previous talks
+      // setPreviousTalks((prevTalks) => prevTalks + ' ' + newTranscript);
+      setMsg(newTranscript);
+    });
+
+    // Clean up when the component unmounts
+    return () => {
+      annyang.abort();
+      annyang.removeCallback("result");
+    };
+  }, []);
+
+  const startListening = () => {
+    annyang.start();
+    setisListening(false);
+  };
+
+  const stopListening = () => {
+    annyang.abort();
+    setisListening(true);
+  };
+
   return (
     <Container>
       <div className="button-container">
         <div className="emoji">
-        <FaFaceSmileWink size={30} onClick={handleEmojiPickerhideShow} />
+          <FaFaceSmileWink size={30} onClick={handleEmojiPickerhideShow} />
           {/* <BsEmojiSmileFill size={32} onClick={handleEmojiPickerhideShow} /> */}
           {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />}
         </div>
@@ -40,12 +97,30 @@ export default function ChatInput({ handleSendMsg }) {
         <input
           type="text"
           placeholder="Type your message"
-          onChange={(e) => setMsg(e.target.value)}
+          onChange={handleChange}
           className="my-auto"
           value={msg}
         />
-        <button type="submit" >
-          <IoMdSend size={25} className="rounded-lg"/>
+
+        {isListening ? (
+          <button
+            className="btn"
+            onClick={startListening}
+            style={{ border: "none" }}
+          >
+            <AiFillAudio color="white" size={27} />
+          </button>
+        ) : (
+          <button
+            className="btn "
+            onClick={stopListening}
+            style={{ border: "none" }}
+          >
+            <FaPause color="white" size={27} />
+          </button>
+        )}
+        <button type="submit" className="buttonnormal">
+          <IoMdSend size={25} className="rounded-lg" />
         </button>
       </form>
     </Container>
@@ -54,12 +129,12 @@ export default function ChatInput({ handleSendMsg }) {
 
 const Container = styled.div`
   display: grid;
-  width:100%;
-  border-radius:20px;
+  width: 100%;
+  border-radius: 20px;
   align-items: center;
   grid-template-columns: 5% 95%;
   background-color: #080420;
- 
+
   @media (max-width: 800px) {
     grid-template-columns: 8% 92%;
     padding: 0 1rem;
@@ -107,11 +182,11 @@ const Container = styled.div`
   }
   .input-container {
     width: 100%;
-    height:35px;
+    height: 35px;
     border-radius: 2rem;
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 0rem;
     background-color: #ffffff34;
     input {
       width: 90%;
@@ -129,7 +204,12 @@ const Container = styled.div`
         outline: none;
       }
     }
-    button {
+    @media (max-width: 500px) {
+      input {
+        font-size: 1rem;
+      }
+    }
+    .buttonnormal {
       padding: 0.3rem 2rem;
       border-radius: 2rem;
       display: flex;
@@ -138,7 +218,6 @@ const Container = styled.div`
       background-color: #9a86f3;
       border: none;
       @media screen and (max-width: 800px) {
-
         padding: 0.3rem 1rem;
         svg {
           font-size: 1rem;

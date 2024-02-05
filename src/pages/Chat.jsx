@@ -18,12 +18,12 @@ export default function Chat() {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
-    if (window.innerWidth <= 576) {
+    if (window.innerWidth <=767) {
       setIsSmallScreen(true);
     }
 
     const handleResize = () => {
-      setIsSmallScreen(window.innerWidth <= 576);
+      setIsSmallScreen(window.innerWidth <= 767);
     };
 
     window.addEventListener("resize", handleResize);
@@ -90,11 +90,11 @@ export default function Chat() {
             {(!isSmallScreen || currentChat) && (
               <>
                 {currentChat === undefined ? (
-                  <div className={`col-12 col-sm-8  col-md-8 col-xl-9 h-100`}>
+                  <div className={`col-12   col-md-8 col-xl-9 h-100`}>
                     <Welcome />
                   </div>
                 ) : (
-                  <div className={`col-12 p-0 col-md-8 col-xl-9 h-100`}>
+                  <div className={`col-12  p-0 col-md-8 col-xl-9 h-100`}>
                     <ChatContainer
                       currentChat={currentChat}
                       socket={socket}

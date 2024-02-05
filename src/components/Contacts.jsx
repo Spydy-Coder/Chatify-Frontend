@@ -29,12 +29,9 @@ export default function Contacts({ contacts, changeChat }) {
             style={{ height: "10%" }}
           >
             <div className="">
-            <img src={Logo} alt="logo" className="rounded-circle" />
+              <img src={Logo} alt="logo" className="rounded-circle" />
             </div>
             <h4 className="mb-0 fw-bold">CHATIFY</h4>
-
-           
-           
           </div>
           <div
             className="contacts"
@@ -59,8 +56,23 @@ export default function Contacts({ contacts, changeChat }) {
                       />
                     </div>
                     <div className="username text-white">
-                      <h5 className="mt-1 mb-0">{contact.username}</h5>
-                      <h6><small>{contact.status === "online" ? <GoDotFill color="green" /> : <GoDotFill color="red" />}{contact.status}</small></h6>
+                      <h5
+                        className="mt-1 mb-0"
+                        style={{ overflowWrap: "break-word" }}
+                      >
+                        {contact.username}
+                      </h5>
+
+                      <h6>
+                        <small>
+                          {contact.status === "online" ? (
+                            <GoDotFill color="green" />
+                          ) : (
+                            <GoDotFill color="red" />
+                          )}
+                          {contact.status}
+                        </small>
+                      </h6>
                     </div>
                   </li>
                 );
@@ -81,9 +93,8 @@ export default function Contacts({ contacts, changeChat }) {
               <h5 className="m-0">{currentUserName}</h5>
             </div>
             <div className="">
-            <Logout className="logout"/>
+              <Logout className="logout" />
             </div>
-            
           </div>
         </div>
       )}
