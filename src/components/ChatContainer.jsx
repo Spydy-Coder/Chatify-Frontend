@@ -99,7 +99,7 @@ export default function ChatContainer({ currentChat, socket, handleBack }) {
             <h6><small>{currentChat.status === "online" ? <GoDotFill color="green" /> : <GoDotFill color="red" />}{currentChat.status}</small></h6>
           </div>
         </div>
-        <div className="d-flex justify-content-center" style={{width:"10%"}}>
+        <div className="d-flex justify-content-center py-1" style={{width:"10%"}}>
           <Logout />
         </div>
       </div>
