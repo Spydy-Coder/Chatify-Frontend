@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Logo from "../assets/logo.png";
 import "./Contacts.css";
+import Logout from "./Logout";
+import { GoDotFill } from "react-icons/go";
 
 export default function Contacts({ contacts, changeChat }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
@@ -57,7 +59,8 @@ export default function Contacts({ contacts, changeChat }) {
                       />
                     </div>
                     <div className="username text-white">
-                      <h5>{contact.username}</h5>
+                      <h5 className="mt-1 mb-0">{contact.username}</h5>
+                      <h6><small>{contact.status === "online" ? <GoDotFill color="green" /> : <GoDotFill color="red" />}{contact.status}</small></h6>
                     </div>
                   </li>
                 );
@@ -77,6 +80,10 @@ export default function Contacts({ contacts, changeChat }) {
             <div className="username text-white">
               <h5 className="m-0">{currentUserName}</h5>
             </div>
+            <div className="">
+            <Logout className="logout"/>
+            </div>
+            
           </div>
         </div>
       )}

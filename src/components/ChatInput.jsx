@@ -3,6 +3,7 @@ import { BsEmojiSmileFill } from "react-icons/bs";
 import { IoMdSend } from "react-icons/io";
 import styled from "styled-components";
 import Picker from "emoji-picker-react";
+import { FaFaceSmileWink } from "react-icons/fa6";
 
 
 export default function ChatInput({ handleSendMsg }) {
@@ -30,7 +31,8 @@ export default function ChatInput({ handleSendMsg }) {
     <Container>
       <div className="button-container">
         <div className="emoji">
-          <BsEmojiSmileFill size={32} onClick={handleEmojiPickerhideShow} />
+        <FaFaceSmileWink size={30} onClick={handleEmojiPickerhideShow} />
+          {/* <BsEmojiSmileFill size={32} onClick={handleEmojiPickerhideShow} /> */}
           {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />}
         </div>
       </div>

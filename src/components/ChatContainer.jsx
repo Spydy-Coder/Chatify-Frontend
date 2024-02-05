@@ -8,6 +8,7 @@ import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
 import "./ChatContainer.css";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { GoDotFill } from "react-icons/go";
 
 export default function ChatContainer({ currentChat, socket, handleBack }) {
   const navigate = useNavigate();
@@ -76,27 +77,29 @@ export default function ChatContainer({ currentChat, socket, handleBack }) {
   return (
     <div className="container-fluid " style={{ height: "100%" }}>
       <div
-        className="chat-header d-flex justify-content-between p-2 "
+        className="chat-header d-flex justify-content-between py-2 "
         style={{ height: "10%" }}
       >
-        <div className="user-details d-flex gap-3">
+        <div className="user-details d-flex gap-1 gap-sm-3"style={{width:"90%"}}>
           <IoArrowBackCircleSharp
             className="back"
             onClick={handleBack}
             size={40}
             color="#9a86f3"
           />
-          <div className="avatar">
+          <div className="avatarimg">
             <img
               src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
               alt=""
+              className="avatarimg"
             />
           </div>
-          <div className="username text-white py-2">
-            <h4 className="">{currentChat.username}</h4>
+          <div className="username text-white  d-flex flex-column ">
+            <h4 className="mb-0 text-wrap">{currentChat.username} </h4>
+            <h6><small>{currentChat.status === "online" ? <GoDotFill color="green" /> : <GoDotFill color="red" />}{currentChat.status}</small></h6>
           </div>
         </div>
-        <div className="">
+        <div className="d-flex justify-content-center" style={{width:"10%"}}>
           <Logout />
         </div>
       </div>
