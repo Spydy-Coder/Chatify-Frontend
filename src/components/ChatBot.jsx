@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { GoDotFill } from "react-icons/go";
 import buddy2 from "./buddy2.png";
 
-const API_KEY = "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";
+const API_KEY = "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";
 // "Explain things like you would to a 10 year old learning how to code."
 const systemMessage = {
   //  Explain things like you're talking to a software professional with 5 years of experience.
@@ -41,7 +41,6 @@ export default function ChatBot({ currentChat, socket, handleBack }) {
     setMessages(msgs);
 
     await processMessageToChatGPT(msgs);
-    console.log("msg:", messages);
   };
 
   async function processMessageToChatGPT(chatMessages) {
@@ -81,11 +80,9 @@ export default function ChatBot({ currentChat, socket, handleBack }) {
       body: JSON.stringify(apiRequestBody),
     })
       .then((data) => {
-        console.log(apiRequestBody);
         return data.json();
       })
       .then(async (data) => {
-        console.log(data);
         setMessages([
           ...chatMessages,
           {
@@ -93,7 +90,6 @@ export default function ChatBot({ currentChat, socket, handleBack }) {
             fromSelf: false,
           },
         ]);
-        console.log(data1._id);
         await axios
           .post(sendMessageRoute, {
             from: currentChat._id,
