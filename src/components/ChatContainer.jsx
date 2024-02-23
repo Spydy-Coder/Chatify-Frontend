@@ -48,7 +48,7 @@ export default function ChatContainer({ currentChat, socket, handleBack }) {
       msg,
     });
     await axios.post(sendMessageRoute, {
-      from: data._id,
+      from: data._id, 
       to: currentChat._id,
       message: msg,
     });

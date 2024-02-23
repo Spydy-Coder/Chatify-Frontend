@@ -66,8 +66,12 @@ export default function Login() {
       <FormContainer>
         <form action="" onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
-            <img  className="rounded-circle" style={{height:"80px",width:"80px"}} src={Logo} alt="logo" />
-          
+            <img
+              className="rounded-circle"
+              style={{ height: "80px", width: "80px" }}
+              src={Logo}
+              alt="logo"
+            />
           </div>
           <input
             type="text"
@@ -148,7 +152,7 @@ const FormContainer = styled.div`
     font-size: 1rem;
     text-transform: uppercase;
     &:hover {
-      background-color: #4e0eff;
+      background-color: rgba(116, 89, 191, 1);
     }
   }
   span {

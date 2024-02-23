@@ -7,11 +7,14 @@ import { allUsersRoute, host } from "../utils/APIRoutes";
 import ChatContainer from "../components/ChatContainer";
 import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
+import ChatBot from "../components/ChatBot";
 import "./Chat.css";
 
 export default function Chat() {
   const navigate = useNavigate();
   const socket = useRef();
+
+  // Initialize state with the predefined contact
   const [contacts, setContacts] = useState([]);
   const [currentChat, setCurrentChat] = useState(undefined);
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -57,8 +60,10 @@ export default function Chat() {
       try {
         if (currentUser) {
           if (currentUser.isAvatarImageSet) {
-            const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
-            setContacts(data.data);
+            const { data } = await axios.get(
+              `${allUsersRoute}/${currentUser._id}`
+            );
+            setContacts(data);
           } else {
             navigate("/setAvatar");
           }
@@ -109,11 +114,23 @@ export default function Chat() {
                   </div>
                 ) : (
                   <div className={`col-12  p-0 col-md-8 col-xl-9 h-100`}>
-                    <ChatContainer
-                      currentChat={currentChat}
-                      socket={socket}
-                      handleBack={handleBack}
-                    />
+                    {currentChat.email === "buddy@openai.com" ? (
+                      <>
+                        <ChatBot
+                          currentChat={currentChat}
+                          socket={socket}
+                          handleBack={handleBack}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <ChatContainer
+                          currentChat={currentChat}
+                          socket={socket}
+                          handleBack={handleBack}
+                        />
+                      </>
+                    )}
                   </div>
                 )}
               </>

@@ -4,9 +4,17 @@ import Logo from "../assets/logo.png";
 import "./Contacts.css";
 import Logout from "./Logout";
 import { GoDotFill } from "react-icons/go";
+import { RiRobot2Fill } from "react-icons/ri";
 
 export default function Contacts({ contacts, changeChat }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
+  const predefinedContact = {
+    email: "buddy@openai.com",
+    username: "Buddy",
+    avatarImage: "https://example.com/predefined-avatar.jpg",
+    _id: "65c0d419508086996680d56a",
+    status: "online",
+  };
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
   useEffect(async () => {
@@ -15,11 +23,12 @@ export default function Contacts({ contacts, changeChat }) {
     );
     setCurrentUserName(data.username);
     setCurrentUserImage(data.avatarImage);
-  },[]);
+  }, []);
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index);
     changeChat(contact);
   };
+
   return (
     <>
       {currentUserImage && currentUserImage && (
@@ -32,6 +41,20 @@ export default function Contacts({ contacts, changeChat }) {
               <img src={Logo} alt="logo" className="rounded-circle" />
             </div>
             <h4 className="mb-0 fw-bold">CHATIFY</h4>
+
+            <button
+              onClick={() => changeCurrentChat(2, predefinedContact)}
+              className="btn btn-tooltip"
+              data-bs-toggle="tooltip"
+              data-bs-placement="bottom"
+              title="Your Buddy"
+            >
+              <RiRobot2Fill
+                size={28}
+                className="mb-1 ms-2"
+                style={{ cursor: "pointer" }}
+              />
+            </button>
           </div>
           <div
             className="contacts"
@@ -52,7 +75,7 @@ export default function Contacts({ contacts, changeChat }) {
                     <div className="avatar">
                       <img
                         src={`data:image/svg+xml;base64,${contact.avatarImage}`}
-                        alt=""
+                        alt="image not found"
                       />
                     </div>
                     <div className="username text-white">

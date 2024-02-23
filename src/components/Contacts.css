@@ -40,3 +40,10 @@
     }
   }
   
+  .btn-tooltip {
+    border: none;
+    background-color: transparent;
+    color: white;
+    padding: 0;
+  }
+ 
