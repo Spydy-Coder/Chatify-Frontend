@@ -5,6 +5,7 @@ import "./Contacts.css";
 import Logout from "./Logout";
 import { GoDotFill } from "react-icons/go";
 import { RiRobot2Fill } from "react-icons/ri";
+import altprofile from "../assets/altprofile.png"
 
 export default function Contacts({ contacts, changeChat }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
@@ -75,7 +76,7 @@ export default function Contacts({ contacts, changeChat }) {
                     <div className="avatar">
                       <img
                         src={`data:image/svg+xml;base64,${contact.avatarImage}`}
-                        alt="image not found"
+                        alt=""
                       />
                     </div>
                     <div className="username text-white">

@@ -9,12 +9,10 @@ import "./ChatBot.css";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { GoDotFill } from "react-icons/go";
-import buddy2 from "./buddy2.png";
+import buddy2 from "../assets/buddy2.png";
 
-const API_KEY = "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";
-// "Explain things like you would to a 10 year old learning how to code."
+
 const systemMessage = {
-  //  Explain things like you're talking to a software professional with 5 years of experience.
   role: "system",
   content: "Talk like I am your friend",
 };
@@ -74,7 +72,7 @@ export default function ChatBot({ currentChat, socket, handleBack }) {
     await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
-        Authorization: "Bearer " + API_KEY,
+        Authorization: "Bearer " + process.env.REACT_APP_API_KEY,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(apiRequestBody),
@@ -83,6 +81,7 @@ export default function ChatBot({ currentChat, socket, handleBack }) {
         return data.json();
       })
       .then(async (data) => {
+        console.log(data);
         setMessages([
           ...chatMessages,
           {
@@ -106,6 +105,8 @@ export default function ChatBot({ currentChat, socket, handleBack }) {
   }
 
   useEffect(async () => {
+    if (process.env.REACT_APP_LOCALHOST_KEY)
+      console.log(process.env.REACT_APP_LOCALHOST_KEY);
     const data = await JSON.parse(
       localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
     );
