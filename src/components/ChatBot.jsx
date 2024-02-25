@@ -81,7 +81,6 @@ export default function ChatBot({ currentChat, socket, handleBack }) {
         return data.json();
       })
       .then(async (data) => {
-        console.log(data);
         setMessages([
           ...chatMessages,
           {

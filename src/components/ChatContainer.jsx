@@ -4,17 +4,24 @@ import ChatInput from "./ChatInput";
 import Logout from "./Logout";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
+import {
+  sendMessageRoute,
+  recieveMessageRoute,
+  setPinMessageRoute,
+} from "../utils/APIRoutes";
 import "./ChatContainer.css";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { GoDotFill } from "react-icons/go";
+import { BsFillPinAngleFill } from "react-icons/bs";
+import { RiUnpinFill } from "react-icons/ri";
 
 export default function ChatContainer({ currentChat, socket, handleBack }) {
   const navigate = useNavigate();
   const [messages, setMessages] = useState([]);
   const scrollRef = useRef();
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [isPin, setisPin] = useState(currentChat.isPin);
 
   useEffect(async () => {
     const data = await JSON.parse(
@@ -25,6 +32,7 @@ export default function ChatContainer({ currentChat, socket, handleBack }) {
       to: currentChat._id,
     });
     setMessages(response.data);
+    setisPin(currentChat.isPin);
   }, [currentChat]);
 
   useEffect(() => {
@@ -48,7 +56,7 @@ export default function ChatContainer({ currentChat, socket, handleBack }) {
       msg,
     });
     await axios.post(sendMessageRoute, {
-      from: data._id, 
+      from: data._id,
       to: currentChat._id,
       message: msg,
     });
@@ -74,13 +82,33 @@ export default function ChatContainer({ currentChat, socket, handleBack }) {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  const handlePin = async () => {
+    const data = await JSON.parse(
+      localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
+    );
+    try {
+      const response = await axios.post(setPinMessageRoute, {
+        isPin: !isPin,
+        user_id: data._id,
+        chat_id: currentChat._id,
+      });
+      console.log(response.data);
+      setisPin(!isPin);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className="container-fluid " style={{ height: "100%" }}>
       <div
         className="chat-header d-flex justify-content-between py-2 "
         style={{ height: "10%" }}
       >
-        <div className="user-details d-flex gap-1 gap-sm-3"style={{width:"90%"}}>
+        <div
+          className="user-details d-flex gap-1 gap-sm-3"
+          style={{ width: "90%" }}
+        >
           <IoArrowBackCircleSharp
             className="back"
             onClick={handleBack}
@@ -96,10 +124,45 @@ export default function ChatContainer({ currentChat, socket, handleBack }) {
           </div>
           <div className="username text-white  d-flex flex-column ">
             <h4 className="mb-0 text-wrap">{currentChat.username} </h4>
-            <h6><small>{currentChat.status === "online" ? <GoDotFill color="green" /> : <GoDotFill color="red" />}{currentChat.status}</small></h6>
+            <h6>
+              <small>
+                {currentChat.status === "online" ? (
+                  <GoDotFill color="green" />
+                ) : (
+                  <GoDotFill color="red" />
+                )}
+                {currentChat.status}
+              </small>
+            </h6>
           </div>
         </div>
-        <div className="d-flex justify-content-center py-1" style={{width:"10%"}}>
+        <span onClick={handlePin} className="me-2 mt-1 mt-sm-0 me-sm-0 ">
+          {isPin ? (
+            <RiUnpinFill
+              color="white"
+              size={23}
+              style={{ cursor: "pointer" }}
+              className=" btn btn-tooltip"
+              data-bs-toggle="tooltip"
+              data-bs-placement="bottom"
+              title="UnPin Chat"
+            />
+          ) : (
+            <BsFillPinAngleFill
+              color="white"
+              size={20}
+              style={{ cursor: "pointer" }}
+              className=" btn btn-tooltip mt-1"
+              data-bs-toggle="tooltip"
+              data-bs-placement="bottom"
+              title="Pin Chat"
+            />
+          )}
+        </span>
+        <div
+          className="d-flex justify-content-center py-1"
+          style={{ width: "10%" }}
+        >
           <Logout />
         </div>
       </div>
@@ -131,76 +194,3 @@ export default function ChatContainer({ currentChat, socket, handleBack }) {
     </div>
   );
 }
-
-// const Container = styled.div`
-//   display: grid;
-//   grid-template-rows: 10% 80% 10%;
-//   gap: 0.1rem;
-//   overflow: hidden;
-//   @media screen and (min-width: 720px) and (max-width: 1080px) {
-//     grid-template-rows: 15% 70% 15%;
-//   }
-//   .chat-header {
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: center;
-//     padding: 0 2rem;
-//     .user-details {
-//       display: flex;
-//       align-items: center;
-//       gap: 1rem;
-//       .avatar {
-//         img {
-//           height: 3rem;
-//         }
-//       }
-//       .username {
-//         h3 {
-//           color: white;
-//         }
-//       }
-//     }
-//   }
-// .chat-messages {
-//   padding: 1rem 2rem;
-//   display: flex;
-//   flex-direction: column;
-//   gap: 1rem;
-//   overflow: auto;
-//   &::-webkit-scrollbar {
-//     width: 0.2rem;
-//     &-thumb {
-//       background-color: #ffffff39;
-//       width: 0.1rem;
-//       border-radius: 1rem;
-//     }
-//   }
-//   .message {
-//     display: flex;
-//     align-items: center;
-//     .content {
-//       max-width: 40%;
-//       overflow-wrap: break-word;
-//       padding: 1rem;
-//       font-size: 1.1rem;
-//       border-radius: 1rem;
-//       color: #d1d1d1;
-//       @media screen and (min-width: 720px) and (max-width: 1080px) {
-//         max-width: 70%;
-//       }
-//     }
-//   }
-//   .sended {
-//     justify-content: flex-end;
-//     .content {
-//       background-color: #4f04ff21;
-//     }
-//   }
-//   .recieved {
-//     justify-content: flex-start;
-//     .content {
-//       background-color: #9900ff20;
-//     }
-//   }
-// }
-// `;

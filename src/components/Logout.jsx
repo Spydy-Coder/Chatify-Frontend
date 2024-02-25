@@ -17,8 +17,11 @@ export default function Logout() {
     }
   };
   return (
-    <Button onClick={handleClick}>
-      <BiPowerOff />
+    <Button onClick={handleClick} >
+      <BiPowerOff color="white"  className=" btn btn-tooltip"
+              data-bs-toggle="tooltip"
+              data-bs-placement="bottom"
+              title="Logout" />
     </Button>
   );
 }

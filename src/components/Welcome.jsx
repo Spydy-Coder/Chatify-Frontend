@@ -4,9 +4,9 @@ import Robot from "../assets/robot.gif";
 import Logout from "./Logout";
 export default function Welcome() {
   const [userName, setUserName] = useState("");
-  useEffect(async () => {
+  useEffect(() => {
     setUserName(
-      await JSON.parse(
+      JSON.parse(
         localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
       ).username
     );
