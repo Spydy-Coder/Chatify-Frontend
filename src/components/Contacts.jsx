@@ -9,7 +9,7 @@ import altprofile from "../assets/altprofile.png";
 import { RiUnpinFill } from "react-icons/ri";
 
 export default function Contacts({ contacts, changeChat }) {
-  const [currentUserName, setCurrentUserName] = useState("");
+  const [currentUserName, setCurrentUserName] = useState(undefined);
   const predefinedContact = {
     email: "buddy@openai.com",
     username: "Buddy",
